@@ -1,0 +1,6 @@
+{
+  "name": "Terminal Portfolio",
+  "description": "A high-fidelity interactive terminal simulation web portfolio showcasing systems engineering, security, and high-availability infrastructures.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
