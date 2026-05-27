@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { 
-  Terminal as TerminalIcon, ShieldCheck, Cpu, HardDrive, LayoutGrid, Github, Linkedin, Mail, Send, CheckCircle, Database, HelpCircle, ArrowRight
+  Terminal as TerminalIcon, ShieldCheck, Cpu, HardDrive, LayoutGrid, Github, Linkedin, Mail, Send, CheckCircle, Database, HelpCircle, ArrowRight, Check, Copy
 } from 'lucide-react';
 import { TabId, SystemMetrics, ContactMessage } from './types';
 import { TerminalFrame } from './components/TerminalFrame';
@@ -139,6 +139,43 @@ export default function App() {
     setSavedMessages([]);
   };
 
+  const [emailCopied, setEmailCopied] = useState<boolean>(false);
+
+  const copyToClipboard = (text: string) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          setEmailCopied(true);
+          setTimeout(() => setEmailCopied(false), 2500);
+        })
+        .catch((err) => {
+          console.error('Failed to copy: ', err);
+          fallbackCopyTextToClipboard(text);
+        });
+    } else {
+      fallbackCopyTextToClipboard(text);
+    }
+  };
+
+  const fallbackCopyTextToClipboard = (text: string) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2500);
+    } catch (err) {
+      console.error('Fallback copy failed', err);
+    }
+    document.body.removeChild(textArea);
+  };
+
   // Selected sub-simulation inside projects
   const [selectedDemo, setSelectedDemo] = useState<'akvorado' | 'cluster-hardened'>('akvorado');
 
@@ -167,11 +204,10 @@ export default function App() {
             <div className="bg-[#020502]/80 border-l-4 border-[#00ff00] p-4 rounded-sm">
               <span className="text-xs uppercase text-zinc-500 block font-bold tracking-wider">Presentación de Servicios</span>
               <h1 className="text-xl sm:text-2xl font-black text-white mt-1 uppercase tracking-tight">
-                Arquitectura de Infraestructura, Redes y Cybersecurity
+                terminal-portfolio // Franco Gabriel Gomez
               </h1>
               <p className="text-sm text-gray-300 mt-2 leading-relaxed font-light">
-                Asegurando la resiliencia integral de sistemas mediante orquestación autoconfigurable, 
-                auditorías de seguridad (hardening defensivo) y observabilidad exhaustiva de flujos de red.
+                <strong className="text-white font-semibold">"Infraestructura segura, transparente, sin compromiso".</strong> Especializado en Administración de Sistemas (SysAdmin), Ingeniería de Redes e Infraestructura Segura. Formación avanzada en Ingeniería en Sistemas de Información (Universidad de la Cuenca del Plata).
               </p>
             </div>
 
@@ -180,30 +216,30 @@ export default function App() {
               <div className="border border-[#00ff00]/15 bg-black/50 p-4 rounded-sm">
                 <div className="flex items-center gap-2 text-white mb-2 font-bold uppercase text-xs">
                   <Cpu className="w-4 h-4 text-[#00ff00]" />
-                  <span>Sistemas Distribuidos</span>
+                  <span>Sistemas & HA Clustering</span>
                 </div>
                 <p className="text-[11px] text-gray-400 leading-relaxed font-light">
-                  Configuración declarativa (IaC) de clústeres elásticos y balanceo multicapa que eliminan puntos únicos de falla (SPOF).
+                  Diseño de topologías de red lógicas, arquitecturas de alta disponibilidad (Clúster Activo-Pasivo) y eliminación de puntos únicos de fallo (SPOF) con Keepalived (VIP) y Rsync.
                 </p>
               </div>
 
               <div className="border border-[#00ff00]/15 bg-black/50 p-4 rounded-sm">
                 <div className="flex items-center gap-2 text-white mb-2 font-bold uppercase text-xs">
                   <ShieldCheck className="w-4 h-4 text-[#00ff00]" />
-                  <span>Hardening & Defensivo</span>
+                  <span>Security Hardening</span>
                 </div>
                 <p className="text-[11px] text-gray-400 leading-relaxed font-light">
-                  Mitigación activa de vulnerabilidades en kernel, políticas restrictivas WAF/ACL, Docker isolation y cifrado TLS ubicuo.
+                  Establecimiento férreo de políticas de Control de Acceso Basado en Roles (RBAC), firewalls restrictivos (UFW/Iptables) y contramedidas automáticas con Fail2Ban.
                 </p>
               </div>
 
               <div className="border border-[#00ff00]/15 bg-black/50 p-4 rounded-sm">
                 <div className="flex items-center gap-2 text-white mb-2 font-bold uppercase text-xs">
                   <Database className="w-4 h-4 text-[#00ff00]" />
-                  <span>Observabilidad Completa</span>
+                  <span>Resiliencia & Telemetría</span>
                 </div>
                 <p className="text-[11px] text-gray-400 leading-relaxed font-light">
-                  Captura automatizada de telemetrías NetFlow/IPFIX para auditar el rendimiento y detectar anomalías en ms.
+                  Diagnóstico avanzado en desajustes de versiones (Docker API), conflictos de puertos, desfases NTP y exportación de flujos mediante NetFlow v5.
                 </p>
               </div>
             </div>
@@ -230,42 +266,60 @@ export default function App() {
               <div className="lg:col-span-1 border border-[#00ff00]/15 bg-black/60 p-4 rounded-sm flex flex-col justify-between">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between border-b border-[#00ff00]/15 pb-2">
-                    <span className="font-bold text-white text-xs uppercase uppercase">Información / Host</span>
+                    <span className="font-bold text-white text-xs uppercase">Información / Host</span>
                     <span className="text-[9px] text-[#00ff00] font-mono">[DECR_FILE]</span>
                   </div>
 
                   {/* Character Avatar Simulation */}
                   <div className="bg-neutral-950 p-4 border border-[#00ff00]/10 rounded-sm text-center">
                     <pre className="text-[9px] text-[#00ff00]/60 leading-tight font-black select-none">
-{`   _____ _      _____
-  / ____| |    |_   _|
- | |    | |      | |  
- | |    | |      | |  
- | |____| |____ _| |_ 
-  \\_____|______|_____|
-                      `}
+{`   _____  _____ ______ 
+  |  ___|/ ____|  ____|
+  | |__  | |  __| |__  
+  |  __| | | |_ |  __| 
+  | |    | |__| | |____
+  |_|     \\_____|______|`}
                     </pre>
-                    <span className="text-white font-extrabold block text-xs mt-3 uppercase tracking-wider">CLI Systems Architect</span>
-                    <span className="text-[10px] text-gray-500">eltrolfransamFG@gmail.com</span>
+                    <span className="text-white font-extrabold block text-xs mt-3 uppercase tracking-wider">Franco Gabriel Gomez</span>
+                    <span className="text-[10px] text-[#00ff00] font-bold block">Administrador de Sistemas & Seguridad</span>
+                    <div className="mt-2.5 flex justify-center">
+                      <button
+                        onClick={() => copyToClipboard('eltrolfransamFG@gmail.com')}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] border border-[#00ff00]/15 bg-black hover:border-[#00ff00]/70 hover:bg-[#00ff00]/5 text-gray-400 hover:text-[#00ff00] rounded-sm transition-all cursor-pointer font-mono h-7"
+                        title="Copiar email al portapapeles"
+                      >
+                        {emailCopied ? (
+                          <>
+                            <Check className="w-3 h-3 text-[#00ff00]" />
+                            <span className="text-[#00ff00] font-bold">¡Copiado!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Mail className="w-3.5 h-3.5" />
+                            <span>Copiar Correo</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Bio specifications list */}
                   <div className="space-y-1.5 text-xs font-mono">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Localización:</span>
-                      <span className="text-white">Remote (GMT-5)</span>
+                      <span className="text-gray-500">Formación:</span>
+                      <span className="text-white text-[10px] text-right">Ing. Sistemas (UCP)</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">Filosofía:</span>
-                      <span className="text-white">IaC Declarativo 100%</span>
+                      <span className="text-white text-right">Transparente, Sin Compromiso</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">OS Host:</span>
-                      <span className="text-white">RHEL / Linux Kernel</span>
+                      <span className="text-gray-500">Cluster Status:</span>
+                      <span className="text-white">Keepalived (Active-Passive)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">Nivel Seguridad:</span>
-                      <span className="text-emerald-400 font-bold">Hardened VPS</span>
+                      <span className="text-gray-500">Seguridad:</span>
+                      <span className="text-emerald-400 font-bold">RBAC / Fail2Ban / UFW</span>
                     </div>
                   </div>
                 </div>
@@ -296,33 +350,33 @@ export default function App() {
               <div className="lg:col-span-2 border border-[#00ff00]/15 bg-black/40 p-5 rounded-sm space-y-4">
                 <div className="flex items-center justify-between border-b border-[#00ff00]/15 pb-2">
                   <span className="font-bold text-white text-xs uppercase">Especialización de Ingeniería de Sistemas</span>
-                  <span className="text-[10px] text-gray-500 font-mono">STABILIZATION_PROTOCOL://LIVE</span>
+                  <span className="text-[10px] text-gray-500 font-mono">UCP://CORRIENTES_ARGENTINA</span>
                 </div>
 
                 <div className="space-y-4 text-xs text-gray-300 leading-relaxed font-light">
                   <p>
-                    Apasionado por la optimización extrema del <strong className="text-white font-bold">metal de procesamiento</strong>, el desarrollo de automatizaciones resilientes y la eliminación sistemática de cuellos de botella mediante observabilidad continua.
+                    Ingeniero en Sistemas de Información egresado de la <strong className="text-white font-bold">Universidad de la Cuenca del Plata</strong>. Especializado en el diagnóstico riguroso de infraestructuras críticas, modelado de redes seguras de alta disponibilidad y gestión resiliente de entornos productivos virtualizados.
                   </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                     <div className="space-y-1 bg-black/60 p-3 border border-[#00ff00]/5 rounded-sm">
-                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ IaC & Orquestación</span>
-                      <span className="text-gray-400 block text-[10px]">Terraform, Ansible playbooks avanzados, Helm charts, Kubernetes cluster hardening, GitOps (ArgoCD), Docker multi-stage builds.</span>
+                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ Arquitectura & Failover</span>
+                      <span className="text-gray-400 block text-[10.5px]">Diseño de topologías lógicas de red, arquitecturas Active-Passive de alta disponibilidad, erradicación de SPOF con Keepalived (Virtual IP) y sincronización redundante mediante Rsync.</span>
                     </div>
 
                     <div className="space-y-1 bg-black/60 p-3 border border-[#00ff00]/5 rounded-sm">
-                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ Infraestructura de Redes</span>
-                      <span className="text-gray-400 block text-[10px]">Ruteo BGP transit, resolución DNS autoritativa de baja latencia, seguridad de red WireGuard IPSec VPN, TLS certificates, HTTP/3, firewalls NFtables.</span>
+                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ Troubleshooting Avanzado</span>
+                      <span className="text-gray-400 block text-[10.5px]">Capacidad para diagnosticar de raíz conflictos complejos de versiones en sockets de Docker API, prevención de colisiones de puertos en red y desajustes de reloj críticos vía NTP / NetFlow.</span>
                     </div>
 
                     <div className="space-y-1 bg-black/60 p-3 border border-[#00ff00]/5 rounded-sm">
-                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ Lenguajes & Tools</span>
-                      <span className="text-gray-400 block text-[10px]">Bash scripting experto, TypeScript (Node/Vite), Go, Rust básico, sintaxis SQL Postgres, git hooks defensivos.</span>
+                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ Hardening y Blindaje</span>
+                      <span className="text-gray-400 block text-[10.5px]">Configuraciones restrictivas de Control de Acceso Basado en Roles (RBAC), endurecimiento de servidores con cortafuegos locales (UFW/Iptables) y mitigación de intrusos con Fail2Ban.</span>
                     </div>
 
                     <div className="space-y-1 bg-black/60 p-3 border border-[#00ff00]/5 rounded-sm">
-                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ Observabilidad & Seguridad</span>
-                      <span className="text-gray-400 block text-[10px]">Akvorado IPFIX NetFlow collectors, Prometheus scraping endpoints, Grafana custom security dashboards, Wazuh HIDS logs analysis.</span>
+                      <span className="text-[#00ff00] font-bold block text-[10px] uppercase">◆ Recursos e Infraestructura</span>
+                      <span className="text-gray-400 block text-[10.5px]">Configuración de protocolos de ruteo, exportación y análisis de tráficos mediante flujos de datos NetFlow v5, optimización y virtualización en contenedores Docker de microservicios.</span>
                     </div>
                   </div>
                 </div>
@@ -420,9 +474,23 @@ export default function App() {
                     <div className="text-[#00ff00] font-bold mb-1">COORDINADAS DIRECTAS:</div>
                     <div className="flex items-center gap-2">
                       <span className="text-gray-500">Email:</span>
-                      <a href="mailto:eltrolfransamFG@gmail.com" className="text-white hover:text-[#00ff00] transition-colors font-bold underline">
-                        eltrolfransamFG@gmail.com
-                      </a>
+                      <button
+                        onClick={() => copyToClipboard('eltrolfransamFG@gmail.com')}
+                        className="inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-[#00ff00]/15 bg-black hover:border-[#00ff00]/60 hover:bg-[#00ff00]/5 text-gray-400 hover:text-[#00ff00] rounded-sm transition-all cursor-pointer font-bold duration-150"
+                        title="Copiar email al portapapeles"
+                      >
+                        {emailCopied ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-[#00ff00]" />
+                            <span className="text-[#00ff00] font-black">¡Copiado al portapapeles!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Mail className="w-3.5 h-3.5 text-gray-500" />
+                            <span>Copiar Correo</span>
+                          </>
+                        )}
+                      </button>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-gray-500">LinkedIn:</span>

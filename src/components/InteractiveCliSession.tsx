@@ -19,9 +19,9 @@ export const InteractiveCliSession: React.FC<InteractiveCliSessionProps> = ({ on
 
   // Default virtual filesystem
   const virtualFiles: Record<string, string> = {
-    'bio.md': `# PERFIL PROFESIONAL\n\nIngeniero en Infraestructura, Redes y Operaciones Críticas.\n\nEspecializado en arquitecturas Unix autoconfigurables, hardening defensivo, automatización Terraform/Ansible y orquestación con Kubernetes.\n\n"La redundancia no es un lujo, es una póliza de seguro de negocio."`,
-    'architecture.txt': `=== ARQUITECTURA DE INFRAESTRUCTURA DE REFERENCIA ===\n\n- Ingress Layer: Dual Nginx balanceados con Keepalived.\n- Kubernetes Nodes: Rocky Linux + Containerd (CNI Cilium con políticas de red L7 e IPsec).\n- Databases: PostgreSQL Multi-Master (BDR) con Failover automático mediante Patroni.\n- Telemetry Stack: Prometheus, VictoriaMetrics, Akvorado Flow Collector.`,
-    'philosophy.json': `{\n  "motto": "Diseñar para fallar, asegurar para resistir.",\n  "values": [\n    "Aislamiento y privilegios mínimos",\n    "Automatización declarativa del 100% de recursos",\n    "Observabilidad exhaustiva en tiempo real"\n  ]\n}`,
+    'bio.md': `# RESUMEN PARA PORTAFOLIO: FRANCO GABRIEL GOMEZ\n\n- Especialidad: Administración de Sistemas (SysAdmin) e Infraestructura Segura.\n- Formación: Ingeniería en Sistemas de Información (Universidad de la Cuenca del Plata).\n\nHabilidades Clave:\n- Arquitectura de Sistemas: Diseño de topologías lógicas de red, arquitecturas de alta disponibilidad (Clúster Activo-Pasivo) e integración de múltiples microservicios.\n- Troubleshooting y Resiliencia: Diagnóstico y resolución de conflictos complejos de versiones (Docker API), colisiones de puertos y desincronizaciones horarias (NTP/NetFlow).\n- Hardening y Seguridad: Políticas de Control de Acceso Basado en Roles (RBAC), firewalls locales (UFW/Iptables) y prevención de intrusiones (Fail2Ban).\n- Gestión de Infraestructura: Protocolos de ruteo, exportación de flujos de datos (NetFlow v5) y gestión de servicios en entornos virtualizados y contenedores.\n- Continuidad Operativa: Eliminación de Puntos Únicos de Fallo (SPOF) mediante replicación automatizada (Rsync) y gestión de IP virtual (Keepalived), asegurando failover instantáneo.`,
+    'architecture.txt': `=== PORTFOLIO CONCEPT & INSPIRATION (BY FRANCO G. GOMEZ) ===\n\nEste portfolio interactivo está diseñado bajo una filosofía de diseño técnico riguroso:\n\n1. Estilo Linux Terminal Tradicional:\n   - Inspirado fielmente en consolas tty de servidores físicos, centros de datos y CLI.\n   - Uso de paletas monocromáticas de alto contraste (fósforo verde y negro absoluto).\n\n2. Minimalismo Atemporal:\n   - Diseño sin adornos destructivos, enfocado 100% en legibilidad, velocidad y resiliencia.\n   - Simuladores dinámicos que imitan flujos de red y sockets operativos reales en tiempo real.\n\n3. Homenaje a la Infraestructura:\n   - Reivindicación de la interfaz de línea de comandos como el estándar máximo de control.\n   - Estética que evoca sesiones securizadas SSH remotas, telemetría y hardening de sistemas.`,
+    'philosophy.json': `{\n  "owner": "Franco Gabriel Gomez",\n  "motto": "Redundancia preventiva, automatización rigurosa y resiliencia absoluta.",\n  "philosophy": {\n    "zero_spof": "Diseñar clústeres de alta disponibilidad y failover automático (Keepalived / Rsync) para eliminar puntos únicos de fallo.",\n    "hardened_by_default": "La seguridad (RBAC, firewalls restrictivos UFW/Iptables y Fail2Ban) se implementa de manera estricta y nativa.",\n    "diagnose_root_causes": "Resolver fallos operativos (sockets, API de Docker y desviaciones del NTP) persiguiendo la causa raíz, no el síntoma."\n  }\n}`,
   };
 
   useEffect(() => {
@@ -209,10 +209,10 @@ export const InteractiveCliSession: React.FC<InteractiveCliSessionProps> = ({ on
           cat architecture.txt
         </button>
         <button 
-          onClick={() => handleShortcutClick('grep "design" philosophy.json')}
+          onClick={() => handleShortcutClick('grep "motto" philosophy.json')}
           className="px-1.5 py-0.5 border border-[#00ff00]/20 hover:border-[#00ff00] bg-black text-gray-300 hover:text-[#00ff00] text-[10px] rounded-sm transition-colors cursor-pointer"
         >
-          grep values philosophy.json
+          grep motto philosophy.json
         </button>
         <button 
           onClick={() => handleShortcutClick('goto proyectos')}
