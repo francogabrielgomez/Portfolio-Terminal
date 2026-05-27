@@ -284,7 +284,7 @@ export default function App() {
                     <span className="text-[10px] text-[#00ff00] font-bold block">Administrador de Sistemas & Seguridad</span>
                     <div className="mt-2.5 flex justify-center">
                       <button
-                        onClick={() => copyToClipboard('eltrolfransamFG@gmail.com')}
+                        onClick={() => copyToClipboard('gabrielfrangomez146@gmail.com')}
                         className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] border border-[#00ff00]/15 bg-black hover:border-[#00ff00]/70 hover:bg-[#00ff00]/5 text-gray-400 hover:text-[#00ff00] rounded-sm transition-all cursor-pointer font-mono h-7"
                         title="Copiar email al portapapeles"
                       >
@@ -335,7 +335,7 @@ export default function App() {
                     <span>GitHub</span>
                   </a>
                   <a 
-                    href="https://linkedin.com" 
+                    href="https://www.linkedin.com/in/franco-gomez-01860b232/" 
                     target="_blank" 
                     rel="noreferrer"
                     className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#00ff00] transition-colors cursor-pointer"
@@ -473,9 +473,9 @@ export default function App() {
                   <div className="space-y-2 bg-[#020501] border border-[#00ff00]/10 p-3 rounded-sm font-mono text-xs">
                     <div className="text-[#00ff00] font-bold mb-1">COORDINADAS DIRECTAS:</div>
                     <div className="flex items-center gap-2">
-                      <span className="text-gray-500">Email:</span>
-                      <button
-                        onClick={() => copyToClipboard('eltrolfransamFG@gmail.com')}
+                        <span className="text-gray-500">Email:</span>
+                        <button
+                          onClick={() => copyToClipboard('gabrielfrangomez146@gmail.com')}
                         className="inline-flex items-center gap-2 px-2.5 py-1 text-xs border border-[#00ff00]/15 bg-black hover:border-[#00ff00]/60 hover:bg-[#00ff00]/5 text-gray-400 hover:text-[#00ff00] rounded-sm transition-all cursor-pointer font-bold duration-150"
                         title="Copiar email al portapapeles"
                       >
@@ -494,8 +494,8 @@ export default function App() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-gray-500">LinkedIn:</span>
-                      <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold hover:underline">
-                        linkedin.com/my-profile
+                      <a href="https://www.linkedin.com/in/franco-gomez-01860b232/" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold hover:underline">
+                        linkedin.com/in/franco-gomez-01860b232
                       </a>
                     </div>
                     <div className="flex items-center gap-2">
